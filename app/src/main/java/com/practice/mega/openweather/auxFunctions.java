@@ -7,10 +7,11 @@ import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
-
-//Auxiliary Functions.
-//Developed By: Mohamed Abdelaziz
-//Email: mohamedsaleh1984@hotmail.com.
+/*
+Auxiliary Functions.
+Developed By: Mohamed Abdelaziz
+Email: mohamedsaleh1984@hotmail.com
+*/
 public class auxFunctions {
 
     //ResourceType Enum.

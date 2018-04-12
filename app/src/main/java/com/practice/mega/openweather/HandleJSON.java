@@ -12,14 +12,15 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 
-/**
- * Created by MEGA on 4/5/2018.
- */
+/*
+Created by : Mohamed Abdelaziz
+E-mail : Mohamedsaleh1984@hotmail.com
+*/
 
 public class HandleJSON {
     private  String _strAppID = "7a59ab38677b2b24aba6f6dab13a2ac4";
     private  String _strUrl = "https://api.openweathermap.org/data/2.5/weather";
-    private  String _strCity = "hangzhou";
+    private  String _strCity = "";
 
     private String country = "county";
     private double _temperature = 0;
@@ -29,7 +30,7 @@ public class HandleJSON {
     private double _dMaxTemp = 0;
     private String _urlString = null;
     public volatile boolean parsingComplete = true;
-   private  JSONObject _data = null;
+    private  JSONObject _data = null;
 
     public HandleJSON(String city) {
         this._strCity = city;
@@ -74,13 +75,11 @@ public class HandleJSON {
     }
 
     /*
-
-    *
     cod	"404"
     message	"city not found"
      //URL url = new URL(_strUrl + "?q=" + _strCity+ "&APPID=" + _strAppID);
-    * */
-    public void fetchJSON() {
+    */
+    public  void fetchJSON() {
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected void onPreExecute() {

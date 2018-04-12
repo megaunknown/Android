@@ -13,10 +13,14 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-
+/*
+Main Activity
+Developed By: Mohamed Abdelaziz
+E-mail : Mohamedsaleh1984@hotmail.com
+*/
 public class OpenWeatherActivity extends AppCompatActivity {
 
-    //Dictionaries.
+    //Dictionary for Countries Codes-=>Names.
     private Map<String, String> _dCountries;
 
     //Radio Button.
