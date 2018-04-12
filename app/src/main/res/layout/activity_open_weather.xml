@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.practice.mega.openweather.OpenWeather">
+
+    <TextView
+
+    android:id="@+id/textViewLocation"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentTop="true"
+    android:layout_marginTop="32dp"
+    android:layout_marginLeft="8dp"
+    android:text="@string/location"
+    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/editTextLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/textViewLocation"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginRight="8dp"
+        android:maxLines="1"
+        android:minLines="1"
+        android:maxLength="20"
+        android:inputType="text"
+        android:layout_alignBaseline="@id/textViewLocation"
+        android:ems="10"/>
+        <requestFocus />
+    />
+
+    <Button
+        android:id="@+id/btnGetWeather"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextLocation"
+        android:onClick="GetWeatherInfo"
+        android:text="@string/weather"/>
+<!--
+    <SwitchPreferenceCompat
+
+        android:defaultValue="@bool/follow_default_message_subscription"
+        android:key="@string/follow_key_switch_jlin"
+        android:summaryOff="@string/c"
+        android:summaryOn="@string/f"
+        android:title="@string/Switch F/C" />
+!-->
+    <TextView
+        android:id="@+id/textViewCountry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@+id/textViewLocation"
+        android:layout_marginTop="68dp"
+        android:text="@string/country"
+        android:layout_marginLeft="8dp"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <EditText
+        android:id="@+id/editTextCountry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/textViewCountry"
+        android:layout_alignBaseline="@id/textViewCountry"
+        android:layout_marginLeft="32dp"
+        android:maxLength="20"
+        android:inputType="text"
+        android:maxLines="1"
+        android:minLines="1"
+        android:ems="10" >
+
+    </EditText>
+
+    <TextView
+        android:id="@+id/textViewTemp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewCountry"
+        android:layout_marginTop="32dp"
+        android:layout_alignLeft="@id/textViewCountry"
+        android:text="@string/temperature"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/textViewHumidity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textViewTemp"
+        android:layout_below="@+id/textViewTemp"
+        android:layout_marginTop="32dp"
+        android:text="@string/humidity"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <EditText
+        android:id="@+id/editTextHumidty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/textViewHumidity"
+       android:layout_toRightOf="@id/textViewHumidity"
+        android:layout_alignLeft="@id/editTextCountry"
+        android:maxLength="20"
+        android:inputType="text"
+        android:maxLines="1"
+        android:minLines="1"
+        android:ems="10" />
+
+    <EditText
+        android:id="@+id/editTextTemp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textViewTemp"
+        android:layout_toRightOf="@+id/textViewTemp"
+        android:layout_alignLeft="@id/editTextCountry"
+        android:maxLength="20"
+        android:maxLines="1"
+        android:minLines="1"
+        android:inputType="text"
+        android:ems="10" />
+    <TextView
+        android:id="@+id/textViewPressure"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textViewHumidity"
+        android:layout_below="@+id/textViewHumidity"
+        android:layout_marginTop="32dp"
+        android:text="@string/pressure"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+    <EditText
+        android:id="@+id/editTextPressure"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textViewPressure"
+        android:layout_alignLeft="@id/editTextCountry"
+        android:layout_toRightOf="@+id/textViewPressure"
+        android:maxLength="20"
+        android:maxLines="1"
+        android:inputType="text"
+        android:minLines="1"
+        android:ems="10" />
+
+    <TextView
+        android:id="@+id/textViewMaxTemp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textViewHumidity"
+        android:layout_below="@+id/textViewPressure"
+        android:layout_marginTop="32dp"
+        android:text="@string/maxtmp"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <EditText
+        android:id="@+id/edittextMaxTemp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textViewMaxTemp"
+        android:layout_alignLeft="@id/editTextCountry"
+        android:layout_toRightOf="@+id/textViewMaxTemp"
+        android:maxLength="20"
+        android:inputType="text"
+        android:maxLines="1"
+        android:minLines="1"
+        android:ems="10" />
+
+    <TextView
+        android:id="@+id/textViewMinTemp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textViewHumidity"
+        android:layout_below="@+id/textViewMaxTemp"
+        android:layout_marginTop="32dp"
+        android:text="@string/mintmp"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <EditText
+        android:id="@+id/edittextMinTemp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textViewMinTemp"
+        android:layout_alignLeft="@id/editTextCountry"
+        android:layout_toRightOf="@+id/textViewMinTemp"
+        android:maxLength="20"
+        android:inputType="text"
+        android:maxLines="1"
+        android:minLines="1"
+        android:ems="10" />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_toRightOf="@id/btnGetWeather"
+        android:layout_alignBaseline="@id/btnGetWeather"
+        android:id="@+id/radioGroupTemp">
+    <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/f"
+        android:id="@+id/radioButtonFer"
+        android:checked="true"
+        android:onClick="switchFC"
+        android:textSize="25dp" />
+    <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/c"
+        android:id="@+id/radioButtonDeg"
+        android:layout_gravity="center_horizontal"
+        android:checked="false"
+        android:onClick="switchFC"
+        android:textSize="25dp" />
+    </RadioGroup>
+    <ProgressBar
+        android:id="@+id/progressBarSpinner"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true" />
+</RelativeLayout>
