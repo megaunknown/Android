@@ -7,6 +7,9 @@ import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Random;
+
 /*
 Auxiliary Functions.
 Developed By: Mohamed Abdelaziz
@@ -15,25 +18,15 @@ Email: mohamedsaleh1984@hotmail.com
 public class auxFunctions {
 
     //ResourceType Enum.
-    enum ResourceType {
-        STRINGS, IMAGE, RESOURCE;
+    public static enum ResourceType {
+        STRINGS, IMAGE, RESOURCE,RAW
     }
 
-    //Fahrenheit to Celsius conversion.
-    public static double fahrenheitToCelsius(double f) {
-        double celsiusTemp = 0;
-        celsiusTemp = (f - 32) * (5 / 9);
-        return celsiusTemp;
-    }
-
-    //Celsius to Fahrenheit conversion.
-    public static double celsiusToFahrenheit(double c) {
-        double fahrenheitTemp = 0;
-        fahrenheitTemp = (c * (9 / 5)) + 32;
-        return fahrenheitTemp;
-    }
-
-    //Check if the Phone is connected to the Internet or NOT.
+    /**
+     * Check if the Phone is connected to the Internet or NOT.
+     * @param c Context handler
+     * @return True, otherwise false.
+     */
     public static boolean isNetworkAvailable(Context c) {
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) c.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -41,12 +34,14 @@ public class auxFunctions {
         return activeNetworkInfo != null;
     }
 
-    //Displace long Toast.
-    public static void showToast(Context c, String strMessage) {
-        Toast.makeText(c, strMessage, Toast.LENGTH_LONG).show();
-    }
-
-    //Get the resource id.
+    /**
+     * Get the resource id.
+     * @param cnn Context handler
+     * @param r Resource Type [String,Image..]
+     * @param rsname The resource name.
+     * @throws Exception if the parameters are not filled properly.
+     * @return Resource ID
+     */
     public static int getResourceID(Context cnn, ResourceType r, String rsname) throws Exception {
         if (cnn == null || r == null || rsname.length() == 0)
             throw new Exception("Arguments are not assiged properly");
@@ -61,12 +56,20 @@ public class auxFunctions {
                 break;
             case STRINGS:
                 resID = cnn.getResources().getIdentifier(rsname, "string", cnn.getPackageName());
+            case RAW:
+                resID = cnn.getResources().getIdentifier(rsname, "raw", cnn.getPackageName());
                 break;
         }
         return resID;
     }
 
-    //Read the content of raw file.
+    /**
+     * Read the content of raw file.
+     * @param   resourceId Raw file id
+     * @param   cnn Activity
+     * @throws IOException in case of
+     * @return File Content as String.
+     */
     public static String readRawFileContent(int resourceId, Context cnn) throws IOException {
         StringBuilder strbuilder = new StringBuilder();
         //Fetch Raw Resource File
@@ -79,7 +82,11 @@ public class auxFunctions {
         return strbuilder.toString();
     }
 
-    //Check if the string contains Special Characters.
+    /**
+     * Check if the string contains special characters or digits.
+     * @param   strInput Given input string.
+     * @return True, otherwise false
+     */
     public static boolean isContainsNumberSpecialChars(String strInput)
     {
         Boolean bResult  =  false;
@@ -96,5 +103,21 @@ public class auxFunctions {
                 break;
         }
         return bResult;
+    }
+
+
+
+    //Fahrenheit to Celsius conversion.
+    public static double fahrenheitToCelsius(double f) {
+        double celsiusTemp = 0;
+        celsiusTemp = (f - 32) * (5 / 9);
+        return celsiusTemp;
+    }
+
+    //Celsius to Fahrenheit conversion.
+    public static double celsiusToFahrenheit(double c) {
+        double fahrenheitTemp = 0;
+        fahrenheitTemp = (c * (9 / 5)) + 32;
+        return fahrenheitTemp;
     }
 }
