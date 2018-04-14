@@ -12,4 +12,6 @@
     <string name="maxtmp">Max-Temp</string>
     <string name="f">F</string>
     <string name="c">C</string>
+    <string name="info">info</string>
+    <string name="about">Weather App\nDeveloped By: Mohamed Abdelaziz\nE-mail:mohamedsaleh1984@hotmail.com</string>
 </resources>
