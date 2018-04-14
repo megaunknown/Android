@@ -1,5 +1,6 @@
 package com.practice.mega.openweather;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -35,7 +36,7 @@ public class OpenWeatherActivity extends AppCompatActivity {
     private String _strLocation,_strCountry,_strTemp, _strHumidity, _strPressure, _strMinTemp, _strMaxTemp;
     private HandleJSON obj;
     private char _currentMeasure = 'f';
-    private ProgressBar _spinner;
+    private ProgressDialog progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,27 +50,37 @@ public class OpenWeatherActivity extends AppCompatActivity {
 
         if (savedInstanceState != null) {
             // Restore value of members from saved state
+            /*
+            _strLocation = _location.getText().toString();
             _strCountry = _country.getText().toString();
             _strTemp  = _temperature.getText().toString();
             _strHumidity =  _humidity.getText().toString();
             _strPressure =  _pressure.getText().toString();
             _strMinTemp =  _minTemp.getText().toString();
             _strMaxTemp = _maxTemp.getText().toString();
+            */
         }
+        linkUIWidgets();
+    }
 
+    public void linkUIWidgets()
+    {
         //Radio Group.
         _radioGroup = findViewById(R.id.radioGroupTemp);
         _radioGroup.setVisibility(View.GONE);
 
         //Spinner Settings
-        _spinner = findViewById(R.id.progressBarSpinner);
-        _spinner.setVisibility(View.GONE);
-        _spinner.setMax(100);
+        progress=new ProgressDialog(OpenWeatherActivity.this);
+        progress.setMessage("Fetching Weather Info...");
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setIndeterminate(true);
+        progress.setProgress(0);
+
 
         //Button.
         _btnGetWeatherInfo = findViewById(R.id.btnGetWeather);
 
-        //Main Edit Text Boxses.
+        //Main Edit Text Boxes.
         _location = findViewById(R.id.editTextLocation);
         _country = findViewById(R.id.editTextCountry);
         _temperature = findViewById(R.id.editTextTemp);
@@ -89,31 +100,35 @@ public class OpenWeatherActivity extends AppCompatActivity {
 
         }
     }
-
     //Get City Temp Info
     public void GetWeatherInfo(View v) {
         String strCity = _location.getText().toString();
-        auxUI.showToast(this, strCity);
+        //auxUI.showToast(OpenWeatherActivity.this, strCity);
 
         if (auxFunctions.isNetworkAvailable(this)) {
             if (!auxFunctions.isContainsNumberSpecialChars(strCity)) {
                 if (strCity.length() > 3) {
-                    auxUI.showToast(this, "Please wait to fetch Weather info.");
+
+                    //auxUI.showToast(OpenWeatherActivity.this, "Please wait to fetch Weather info.");
                     _btnGetWeatherInfo.setEnabled(false);
 
-                    //Set Waiting Dialog
-                    _spinner.setVisibility(View.VISIBLE);
+                    //Show the progress Dialog.
+                    progress.show();
+
                     //Fetch Service Data
-                    obj = new HandleJSON(_location.getText().toString());
+                    obj = new HandleJSON(strCity);
                     obj.fetchJSON();
+
                     //While Parsing the data.
                     while (obj.parsingComplete) ;
-                    //  _spinner.setMax(100);
-                    _spinner.setVisibility(View.GONE);
+
+                    //Hide the Progress Dialog
+                    progress.dismiss();
                     _btnGetWeatherInfo.setEnabled(true);
 
                     //Set the info to the Controls.
-                    _country.setText(getCountryName(obj.getCountry()));
+                    _location.setText(obj.getCity());
+                    _country.setText(getCountryName(obj.getCountry()));// rising and error
                     _temperature.setText(String.valueOf(obj.getTemperature()));
                     _humidity.setText(String.valueOf(obj.getHumidity()));
                     _pressure.setText(String.valueOf(obj.getPressure()));
@@ -177,10 +192,10 @@ public class OpenWeatherActivity extends AppCompatActivity {
      * @param   strCountryCode The Country ISO Code like US, EG..etc
      */
     public String getCountryName(String strCountryCode) {
-        String strResult = _dCountries.get(strCountryCode);
-        if( strResult.length() > 0 )
-            return strResult;
-        return "nil";
+        String strResult = "nil";
+        if(_dCountries.containsKey(strCountryCode))
+            strResult = _dCountries.get(strCountryCode);
+        return strResult;
     }
 
     @Override
@@ -188,35 +203,25 @@ public class OpenWeatherActivity extends AppCompatActivity {
         super.onStart();
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
+    @Override protected void onStop() {super.onStop(); }
 
-    }
-
-    @Override
-    protected void onDestroy() {
+    @Override protected void onDestroy() {
         super.onDestroy();
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    @Override protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
         outState.putString("_country", _strCountry);
         outState.putString("_strTemp", _strTemp);
         outState.putString("_strHumidity", _strHumidity);
         outState.putString("_strPressure", _strPressure);
         outState.putString("_strMinTemp", _strMinTemp);
         outState.putString("_strMaxTemp", _strMaxTemp);
-        super.onSaveInstanceState(outState);
     }
 
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-    }
+    @Override protected void onRestoreInstanceState(Bundle savedInstanceState) { super.onRestoreInstanceState(savedInstanceState); }
 
-    @Override
-    protected void onRestart() {
+    @Override protected void onRestart() {
         super.onRestart();
         //Load Dictionary Data.
         try {

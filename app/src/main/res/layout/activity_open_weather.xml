@@ -8,14 +8,13 @@
     tools:context="com.practice.mega.openweather.OpenWeatherActivity">
 
     <LinearLayout
+        android:id="@+id/topPanel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:id="@+id/topPanel"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
-        android:layout_marginLeft="16dp"
-        >
+        android:layout_marginLeft="16dp">
 
         <TextView
             android:id="@+id/textViewLocation"
@@ -42,28 +41,37 @@
             android:inputType="text"
             android:ems="10"/>
         <requestFocus />
-        />
+
         <View
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_weight=".5"
             />
+
         <ImageButton
             android:id="@+id/btnInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/hint"
             android:onClick="Info"
+            android:contentDescription="@string/hint"
             android:src="@drawable/icon"
             android:text="@string/info" />
     </LinearLayout>
+
+    <RelativeLayout
+        android:layout_below="@id/topPanel"
+        android:id="@+id/bottomPart"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
     <Button
         android:id="@+id/btnGetWeather"
         android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/topPanel"
         android:onClick="GetWeatherInfo"
         android:hint="@string/hint"
         android:text="@string/weather"/>
@@ -72,11 +80,9 @@
         android:id="@+id/textViewCountry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/topPanel"
         android:layout_marginTop="68dp"
         android:hint="@string/hint"
         android:text="@string/country"
-        android:layout_alignLeft="@id/topPanel"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <TextView
@@ -122,7 +128,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@id/textViewHumidity"
-       android:layout_toRightOf="@id/textViewHumidity"
+        android:layout_toRightOf="@id/textViewHumidity"
         android:layout_alignLeft="@id/editTextCountry"
         android:maxLength="20"
         android:maxLines="1"
@@ -240,23 +246,6 @@
             android:text="@string/c"
             android:textSize="25sp" />
     </RadioGroup>
-
-    <ProgressBar
-        android:id="@+id/progressBarSpinner"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        tools:visibility="gone" />
-
 </RelativeLayout>
 
-    <!--
-        <SwitchPreferenceCompat
-
-            android:defaultValue="@bool/follow_default_message_subscription"
-            android:key="@string/follow_key_switch_jlin"
-            android:summaryOff="@string/c"
-            android:summaryOn="@string/f"
-            android:title="@string/Switch F/C" />
-    !-->
+</RelativeLayout>
