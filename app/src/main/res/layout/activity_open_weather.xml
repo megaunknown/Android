@@ -4,45 +4,52 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.practice.mega.openweather.OpenWeather">
+    tools:context="com.practice.mega.openweather.OpenWeatherActivity">
 
-    <TextView
-
-    android:id="@+id/textViewLocation"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_alignParentLeft="true"
-    android:layout_alignParentTop="true"
-    android:layout_marginTop="32dp"
-    android:layout_marginLeft="8dp"
-    android:text="@string/location"
-    android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <EditText
-        android:id="@+id/editTextLocation"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/textViewLocation"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginRight="8dp"
-        android:maxLines="1"
-        android:minLines="1"
-        android:maxLength="20"
-        android:inputType="text"
-        android:layout_alignBaseline="@id/textViewLocation"
-        android:ems="10"/>
-        <requestFocus />
-    />
+        android:orientation="horizontal"
+        android:id="@+id/topPanel"
+        >
+        <TextView
+            android:id="@+id/textViewLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="8dp"
+            android:text="@string/location"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+        <EditText
+            android:id="@+id/editTextLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
 
-    <Button
-        android:id="@+id/btnGetWeather"
-        android:layout_centerHorizontal="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/editTextLocation"
-        android:onClick="GetWeatherInfo"
-        android:text="@string/weather"/>
+            android:layout_toRightOf="@id/textViewLocation"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="8dp"
+            android:maxLines="1"
+            android:minLines="1"
+            android:maxLength="20"
+            android:inputType="text"
+            android:layout_alignBaseline="@id/textViewLocation"
+            android:ems="10"/>
+        <requestFocus />
+        />
+
+        <ImageButton
+            android:id="@+id/btnInfo"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="right"
+            android:layout_marginTop="16dp"
+            android:onClick="Info"
+            android:src="@drawable/icon"
+            android:text="@string/info" />
+    </LinearLayout>
 <!--
     <SwitchPreferenceCompat
 
@@ -52,12 +59,21 @@
         android:summaryOn="@string/f"
         android:title="@string/Switch F/C" />
 !-->
+
+    <Button
+        android:id="@+id/btnGetWeather"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/topPanel"
+        android:onClick="GetWeatherInfo"
+        android:text="@string/weather"/>
     <TextView
         android:id="@+id/textViewCountry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:layout_below="@+id/textViewLocation"
+        android:layout_below="@+id/topPanel"
         android:layout_marginTop="68dp"
         android:text="@string/country"
         android:layout_marginLeft="8dp"
@@ -123,6 +139,7 @@
         android:minLines="1"
         android:inputType="text"
         android:ems="10" />
+
     <TextView
         android:id="@+id/textViewPressure"
         android:layout_width="wrap_content"
@@ -132,6 +149,7 @@
         android:layout_marginTop="32dp"
         android:text="@string/pressure"
         android:textAppearance="?android:attr/textAppearanceSmall" />
+
     <TextView
         android:id="@+id/editTextPressure"
         android:layout_width="wrap_content"
@@ -143,7 +161,9 @@
         android:maxLines="1"
         android:inputType="text"
         android:minLines="1"
-        android:ems="10" />
+        android:ems="10"
+        android:layout_toEndOf="@+id/textViewPressure"
+        android:layout_alignStart="@id/editTextCountry" />
 
     <TextView
         android:id="@+id/textViewMaxTemp"
@@ -153,7 +173,8 @@
         android:layout_below="@+id/textViewPressure"
         android:layout_marginTop="32dp"
         android:text="@string/maxtmp"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_alignStart="@+id/textViewHumidity" />
 
     <TextView
         android:id="@+id/edittextMaxTemp"
@@ -166,7 +187,9 @@
         android:inputType="text"
         android:maxLines="1"
         android:minLines="1"
-        android:ems="10" />
+        android:ems="10"
+        android:layout_toEndOf="@+id/textViewMaxTemp"
+        android:layout_alignStart="@id/editTextCountry" />
 
     <TextView
         android:id="@+id/textViewMinTemp"
@@ -176,7 +199,8 @@
         android:layout_below="@+id/textViewMaxTemp"
         android:layout_marginTop="32dp"
         android:text="@string/mintmp"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_alignStart="@+id/textViewHumidity" />
 
     <TextView
         android:id="@+id/edittextMinTemp"
@@ -192,35 +216,42 @@
         android:ems="10" />
 
     <RadioGroup
+        android:id="@+id/radioGroupTemp"
         android:layout_width="match_parent"
-        android:layout_centerHorizontal="true"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_toRightOf="@id/btnGetWeather"
         android:layout_alignBaseline="@id/btnGetWeather"
-        android:id="@+id/radioGroupTemp">
-    <RadioButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/f"
-        android:id="@+id/radioButtonFer"
-        android:checked="true"
-        android:onClick="switchFC"
-        android:textSize="25dp" />
-    <RadioButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/c"
-        android:id="@+id/radioButtonDeg"
-        android:layout_gravity="center_horizontal"
-        android:checked="false"
-        android:onClick="switchFC"
-        android:textSize="25dp" />
+        android:layout_centerHorizontal="true"
+        android:layout_toRightOf="@id/btnGetWeather"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        android:layout_toEndOf="@id/btnGetWeather">
+
+        <RadioButton
+            android:id="@+id/radioButtonFer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:onClick="switchFC"
+            android:text="@string/f"
+            android:textSize="25sp" />
+
+        <RadioButton
+            android:id="@+id/radioButtonDeg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:checked="false"
+            android:onClick="switchFC"
+            android:text="@string/c"
+            android:textSize="25sp" />
     </RadioGroup>
+
     <ProgressBar
         android:id="@+id/progressBarSpinner"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        tools:visibility="gone" />
+
 </RelativeLayout>
