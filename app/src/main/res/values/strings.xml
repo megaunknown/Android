@@ -7,11 +7,12 @@
     <string name="temperature">Temperature:</string>
     <string name="humidity">Humidity:</string>
     <string name="pressure">Pressure:</string>
-    <string name="weather">Weather</string>
+    <string name="weather">Get Weather Info</string>
     <string name="mintmp">Min-Temp</string>
     <string name="maxtmp">Max-Temp</string>
     <string name="f">F</string>
     <string name="c">C</string>
-    <string name="info">info</string>
-    <string name="about">Weather App\nDeveloped By: Mohamed Abdelaziz\nE-mail:mohamedsaleh1984@hotmail.com</string>
+    <string name="info">I</string>
+    <string name="hint"></string>
+    <string name="about">Mega Weather\nDeveloped By: Mohamed Abdelaziz\nE-mail:mohamedsaleh1984@hotmail.com</string>
 </resources>

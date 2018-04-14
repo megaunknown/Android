@@ -226,5 +226,9 @@ public class OpenWeatherActivity extends AppCompatActivity {
         }
     }
 
+    public void Info(View view)
+    {
+        AboutBox.Show(this);
+    }
 }
 

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     tools:context="com.practice.mega.openweather.OpenWeatherActivity">
 
     <LinearLayout
@@ -11,54 +12,51 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:id="@+id/topPanel"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp"
         >
+
         <TextView
             android:id="@+id/textViewLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="16dp"
             android:layout_marginLeft="8dp"
             android:text="@string/location"
+            android:hint="@string/hint"
             android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight=".5"
+            />
         <EditText
             android:id="@+id/editTextLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
-            android:layout_toRightOf="@id/textViewLocation"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginRight="8dp"
             android:maxLines="1"
+            android:hint="@string/hint"
             android:minLines="1"
             android:maxLength="20"
             android:inputType="text"
-            android:layout_alignBaseline="@id/textViewLocation"
             android:ems="10"/>
         <requestFocus />
         />
-
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight=".5"
+            />
         <ImageButton
             android:id="@+id/btnInfo"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_gravity="right"
-            android:layout_marginTop="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint"
             android:onClick="Info"
             android:src="@drawable/icon"
             android:text="@string/info" />
     </LinearLayout>
-<!--
-    <SwitchPreferenceCompat
-
-        android:defaultValue="@bool/follow_default_message_subscription"
-        android:key="@string/follow_key_switch_jlin"
-        android:summaryOff="@string/c"
-        android:summaryOn="@string/f"
-        android:title="@string/Switch F/C" />
-!-->
 
     <Button
         android:id="@+id/btnGetWeather"
@@ -67,16 +65,18 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/topPanel"
         android:onClick="GetWeatherInfo"
+        android:hint="@string/hint"
         android:text="@string/weather"/>
+
     <TextView
         android:id="@+id/textViewCountry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
         android:layout_below="@+id/topPanel"
         android:layout_marginTop="68dp"
+        android:hint="@string/hint"
         android:text="@string/country"
-        android:layout_marginLeft="8dp"
+        android:layout_alignLeft="@id/topPanel"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <TextView
@@ -87,9 +87,9 @@
         android:layout_alignBaseline="@id/textViewCountry"
         android:layout_marginLeft="32dp"
         android:maxLength="20"
-        android:inputType="text"
         android:maxLines="1"
         android:minLines="1"
+        android:hint="@string/hint"
         android:ems="10" >
 
     </TextView>
@@ -102,6 +102,7 @@
         android:layout_marginTop="32dp"
         android:layout_alignLeft="@id/textViewCountry"
         android:text="@string/temperature"
+        android:hint="@string/hint"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <TextView
@@ -112,7 +113,9 @@
         android:layout_below="@+id/textViewTemp"
         android:layout_marginTop="32dp"
         android:text="@string/humidity"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:hint="@string/hint"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_alignStart="@+id/textViewTemp" />
 
     <TextView
         android:id="@+id/editTextHumidty"
@@ -122,10 +125,12 @@
        android:layout_toRightOf="@id/textViewHumidity"
         android:layout_alignLeft="@id/editTextCountry"
         android:maxLength="20"
-        android:inputType="text"
         android:maxLines="1"
         android:minLines="1"
-        android:ems="10" />
+        android:ems="10"
+        android:hint="@string/hint"
+        android:layout_alignStart="@id/editTextCountry"
+        android:layout_toEndOf="@id/textViewHumidity" />
 
     <TextView
         android:id="@+id/editTextTemp"
@@ -134,11 +139,9 @@
         android:layout_alignBaseline="@+id/textViewTemp"
         android:layout_toRightOf="@+id/textViewTemp"
         android:layout_alignLeft="@id/editTextCountry"
-        android:maxLength="20"
-        android:maxLines="1"
-        android:minLines="1"
-        android:inputType="text"
-        android:ems="10" />
+        android:hint="@string/hint"
+        android:ems="10"
+        android:layout_alignStart="@id/editTextCountry" />
 
     <TextView
         android:id="@+id/textViewPressure"
@@ -148,6 +151,7 @@
         android:layout_below="@+id/textViewHumidity"
         android:layout_marginTop="32dp"
         android:text="@string/pressure"
+        android:hint="@string/hint"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <TextView
@@ -157,10 +161,7 @@
         android:layout_alignBaseline="@+id/textViewPressure"
         android:layout_alignLeft="@id/editTextCountry"
         android:layout_toRightOf="@+id/textViewPressure"
-        android:maxLength="20"
-        android:maxLines="1"
-        android:inputType="text"
-        android:minLines="1"
+        android:hint="@string/hint"
         android:ems="10"
         android:layout_toEndOf="@+id/textViewPressure"
         android:layout_alignStart="@id/editTextCountry" />
@@ -183,10 +184,7 @@
         android:layout_alignBaseline="@+id/textViewMaxTemp"
         android:layout_alignLeft="@id/editTextCountry"
         android:layout_toRightOf="@+id/textViewMaxTemp"
-        android:maxLength="20"
-        android:inputType="text"
-        android:maxLines="1"
-        android:minLines="1"
+        android:hint="@string/hint"
         android:ems="10"
         android:layout_toEndOf="@+id/textViewMaxTemp"
         android:layout_alignStart="@id/editTextCountry" />
@@ -209,10 +207,7 @@
         android:layout_alignBaseline="@+id/textViewMinTemp"
         android:layout_alignLeft="@id/editTextCountry"
         android:layout_toRightOf="@+id/textViewMinTemp"
-        android:maxLength="20"
-        android:inputType="text"
-        android:maxLines="1"
-        android:minLines="1"
+        android:hint="@string/hint"
         android:ems="10" />
 
     <RadioGroup
@@ -255,3 +250,13 @@
         tools:visibility="gone" />
 
 </RelativeLayout>
+
+    <!--
+        <SwitchPreferenceCompat
+
+            android:defaultValue="@bool/follow_default_message_subscription"
+            android:key="@string/follow_key_switch_jlin"
+            android:summaryOff="@string/c"
+            android:summaryOn="@string/f"
+            android:title="@string/Switch F/C" />
+    !-->
