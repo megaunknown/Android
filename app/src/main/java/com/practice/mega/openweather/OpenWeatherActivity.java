@@ -1,18 +1,26 @@
 package com.practice.mega.openweather;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.practice.mega.openweather.Auxiliaries.auxFunctions;
+import com.practice.mega.openweather.Auxiliaries.auxUI;
+import com.practice.mega.openweather.OpenWeatherService.OpenWeatherService;
+import org.json.JSONObject;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,7 +30,9 @@ Developed By: Mohamed Abdelaziz
 E-mail : Mohamedsaleh1984@hotmail.com
 */
 public class OpenWeatherActivity extends AppCompatActivity {
-
+    final  String _strAppID = "7a59ab38677b2b24aba6f6dab13a2ac4";
+    final   String _strUrl = "https://api.openweathermap.org/data/2.5/weather";
+    final String _strCity="";
     //Dictionary for Countries Codes-=>Names.
     private Map<String, String> _dCountries;
 
@@ -34,7 +44,7 @@ public class OpenWeatherActivity extends AppCompatActivity {
     private EditText _location;
     private TextView _country, _temperature, _humidity, _pressure, _minTemp, _maxTemp;
     private String _strLocation,_strCountry,_strTemp, _strHumidity, _strPressure, _strMinTemp, _strMaxTemp;
-    private HandleJSON obj;
+    private OpenWeatherService obj;
     private char _currentMeasure = 'f';
     private ProgressDialog progress;
 
@@ -105,23 +115,75 @@ public class OpenWeatherActivity extends AppCompatActivity {
         String strCity = _location.getText().toString();
         //auxUI.showToast(OpenWeatherActivity.this, strCity);
 
-        if (auxFunctions.isNetworkAvailable(this)) {
+        if (auxFunctions.isNetworkAvailable(OpenWeatherActivity.this)) {
             if (!auxFunctions.isContainsNumberSpecialChars(strCity)) {
                 if (strCity.length() > 3) {
+                    fetchJSON(strCity);
 
-                    //auxUI.showToast(OpenWeatherActivity.this, "Please wait to fetch Weather info.");
-                    _btnGetWeatherInfo.setEnabled(false);
+                } else {
+                    auxUI.showToast(this, "Location is so short.");
+                }
+            } else {
+                auxUI.showToast(this, "Please check city name.");
+            }
+        } else {
+            auxUI.showToast(this, "You should be connected to the internet.");
+        }
+    }
+    /**
+     *Fetch OpenWeather Result.
+     *returns cod "200" if the result is OK [Successful]
+     *returns cod "404" if the result is NOT OK [Failed]
+     */
+    public  void fetchJSON(String strCity) {
+        //Fetch Service Data
+        obj = new OpenWeatherService(strCity);
+        final String c = strCity;
+        new AsyncTask<Void, Void, Void>() {
 
-                    //Show the progress Dialog.
-                    progress.show();
+            @Override protected void onPreExecute() {
+                super.onPreExecute();
+                //auxUI.showToast(OpenWeatherActivity.this, "Please wait to fetch Weather info.");
+                _btnGetWeatherInfo.setEnabled(false);
+                //Show the progress Dialog.
+                progress.show();
+            }
 
-                    //Fetch Service Data
-                    obj = new HandleJSON(strCity);
-                    obj.fetchJSON();
 
-                    //While Parsing the data.
-                    while (obj.parsingComplete) ;
+            @Override protected Void doInBackground(Void... params) {
+                try {
 
+                    Log.v("Tag","Process Started.");
+
+                    URL url = new URL(_strUrl + "?q=" + c + "&APPID=" + _strAppID);
+
+                    Log.i("Tag",url.toString());
+                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+
+                    StringBuffer stringBuffer = new StringBuffer(1024);
+                    String strRequestResult = "";
+
+                    Log.v("Tag","Fetching Data.");
+
+                    while ((strRequestResult = reader.readLine()) != null)
+                        stringBuffer.append(strRequestResult).append("\n");
+                    reader.close();
+
+                    JSONObject jsonObject = new JSONObject(stringBuffer.toString());
+                    obj.setData(jsonObject);
+                } catch (Exception e) {
+                    Log.v("Tag", e.getMessage());
+                    return null;
+                }
+
+                return null;
+            }
+
+
+            @Override protected void onPostExecute(Void Void) {
+                if (obj.get_data() != null && obj.isOk()) {
                     //Hide the Progress Dialog
                     progress.dismiss();
                     _btnGetWeatherInfo.setEnabled(true);
@@ -134,23 +196,13 @@ public class OpenWeatherActivity extends AppCompatActivity {
                     _pressure.setText(String.valueOf(obj.getPressure()));
                     _minTemp.setText(String.valueOf(obj.getMinTemperature()));
                     _maxTemp.setText(String.valueOf(obj.getMaxTemperature()));
-
-                    /*For Rotation */
-                    _strCountry = _country.getText().toString();
-                    _strTemp  = _temperature.getText().toString();
-                     _strHumidity =  _humidity.getText().toString();
-                     _strPressure =  _pressure.getText().toString();
-                     _strMinTemp =  _minTemp.getText().toString();
-                     _strMaxTemp = _maxTemp.getText().toString();
-                } else {
-                    auxUI.showToast(this, "Location is so short.");
                 }
-            } else {
-                auxUI.showToast(this, "Please check city name.");
+                else
+                {
+                    Log.v("Tag", "Unexpected Error.");
+                }
             }
-        } else {
-            auxUI.showToast(this, "You should be connected to the internet.");
-        }
+        }.execute();
     }
 
     //Switch Temp
@@ -198,8 +250,7 @@ public class OpenWeatherActivity extends AppCompatActivity {
         return strResult;
     }
 
-    @Override
-    protected void onStart() {
+    @Override protected void onStart() {
         super.onStart();
     }
 
@@ -237,3 +288,12 @@ public class OpenWeatherActivity extends AppCompatActivity {
     }
 }
 
+/*For Rotation */
+                    /*
+                    _strCountry = _country.getText().toString();
+                    _strTemp  = _temperature.getText().toString();
+                     _strHumidity =  _humidity.getText().toString();
+                     _strPressure =  _pressure.getText().toString();
+                     _strMinTemp =  _minTemp.getText().toString();
+                     _strMaxTemp = _maxTemp.getText().toString();
+                     */

@@ -1,4 +1,4 @@
-package com.practice.mega.openweather;
+package com.practice.mega.openweather.Auxiliaries;
 
 import java.util.ArrayList;
 import java.util.Random;

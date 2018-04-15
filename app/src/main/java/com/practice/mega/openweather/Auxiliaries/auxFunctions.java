@@ -1,4 +1,4 @@
-package com.practice.mega.openweather;
+package com.practice.mega.openweather.Auxiliaries;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
